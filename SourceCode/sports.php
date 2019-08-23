@@ -61,6 +61,15 @@ class sports
 
     public function __construct()
     {
+        require_once('db/DbConnect.php');
+        $conn = new DbConnect;
+        $this->conn = $conn->connect();
+
+    }
+
+    public funtion getFacilityCoordinates()
+    {
+        $sql = "SELECT * FROM $this->SportAndRecreation WHERE Latitude is "
 
     }
 
