@@ -1,6 +1,11 @@
 function loadMap() {
-    var uluru = {lat: -25.264, lng: 131.044};
+    var melbourne = {lat: -37.814, lng: 144.963};
     var map = new google.maps.Map(document.getElementById('map'), {
-            center: uluru,
-            zoom: 4});
+            center: melbourne,
+            zoom: 14});
+
+    var market = new google.maps.Marker({
+        position: melbourne,
+        map: map
+    });
 }
