@@ -38,6 +38,7 @@ figure {
 }
 #fixed {
     background-image: url('img/mac.png');
+    font-family: "Comic Sans MS", cursive ;
     position: fixed;
     display: block;
     top: 0;
