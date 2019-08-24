@@ -19,7 +19,8 @@
         #map {
             width: 100%;
             height: 100%;
-            border: 1px solid blue;
+            border: 1px solid lightyellow;
+            shape-outside: ellipse();
         }
         #data, #allData{
             display: none;
@@ -27,6 +28,31 @@
     </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="../img/logo-navbar.png"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" active>
+                    <a class="nav-link" href="#">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">WHAT IS IT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">GET TO MOVE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">CONTACT US</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
     <div class="container">
         <center><h1>Get to move in Melbourne!</h1></center>
         <?php
