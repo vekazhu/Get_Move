@@ -26,9 +26,16 @@
 <body>
     <div class="container">
         <center><h1>Get to move in Melbourne!</h1></center>
+        <?php
+            require 'facility.php';
+            $faci = new facility;
+            $coll = $faci->getFacilityCoordinates();
+            print_r($coll); exit;
+         ?>
         <div id="map"></div>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFBcC-k-V5abg0sD4F257eSiFwl5CJnO8&callback=loadMap"
-            async defer></script>
+            async defer>
+    </script>
 </body>
 </html>

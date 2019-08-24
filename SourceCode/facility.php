@@ -21,6 +21,8 @@ class sports
     private $FacilityCondition;
     private $Changerooms;
     private $LGA;
+    private $conn;
+    private $tableName = "SportsAndRecreation";
 
     function setObjectID($ObjectID) { $this->ObjectID = $ObjectID; }
     function getObjectID() { return $this->ObjectID; }
@@ -61,18 +63,19 @@ class sports
 
     public function __construct()
     {
-        require_once('db/DbConnect.php');
+        require_once('DbConnect.php');
         $conn = new DbConnect;
         $this->conn = $conn->connect();
-
     }
 
-    public funtion getFacilityCoordinates()
+    public function getFacilityCoordinates()
     {
-        $sql = "SELECT * FROM $this->SportAndRecreation WHERE Latitude is "
+        $sql = "SELECT * FROM $this->tableName WHERE Latitude IS NOT NULL AND Longitude
+                IS NOT NULL";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
-
-
 }
 ?>
