@@ -4,7 +4,7 @@ function loadMap() {
             center: melbourne,
             zoom: 14});
 
-    var market = new google.maps.Marker({
+    var marker = new google.maps.Marker({
         position: melbourne,
         map: map
     });

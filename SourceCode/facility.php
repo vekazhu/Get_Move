@@ -1,7 +1,7 @@
 <?php
 
 
-class sports
+class facility
 {
     private $ObjectID;
     private $FacilityID;
@@ -23,6 +23,7 @@ class sports
     private $LGA;
     private $conn;
     private $tableName = "SportsAndRecreation";
+    private $dbName = "Get_Move";
 
     function setObjectID($ObjectID) { $this->ObjectID = $ObjectID; }
     function getObjectID() { return $this->ObjectID; }
@@ -63,6 +64,7 @@ class sports
 
     public function __construct()
     {
+        echo "facility construct";
         require_once('DbConnect.php');
         $conn = new DbConnect;
         $this->conn = $conn->connect();
@@ -70,12 +72,12 @@ class sports
 
     public function getFacilityCoordinates()
     {
-        $sql = "SELECT * FROM $this->tableName WHERE Latitude IS NOT NULL AND Longitude
+        echo "get faciltiy hahaha";
+        $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE Latitude IS NOT NULL AND Longitude
                 IS NOT NULL";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     }
 }
 ?>
