@@ -11,8 +11,8 @@ class facility
     private $StreetType;
     private $SuburbTown;
     private $Postcode;
-    private $Latitude;
-    private $Longitude;
+    private $lat;
+    private $lng;
     private $FacilitySportPlayedID;
     private $SportsPlayed;
     private $NumberFieldCourts;
@@ -41,10 +41,10 @@ class facility
     function getSuburbTown() { return $this->SuburbTown; }
     function setPostcode($Postcode) { $this->Postcode = $Postcode; }
     function getPostcode() { return $this->Postcode; }
-    function setLatitude($Latitude) { $this->Latitude = $Latitude; }
-    function getLatitude() { return $this->Latitude; }
-    function setLongitude($Longitude) { $this->Longitude = $Longitude; }
-    function getLongitude() { return $this->Longitude; }
+    function setlat($lat) { $this->lat = $lat; }
+    function getlat() { return $this->lat; }
+    function setlng($lng) { $this->lng = $lng; }
+    function getlng() { return $this->lng; }
     function setFacilitySportPlayedID($FacilitySportPlayedID) { $this->FacilitySportPlayedID = $FacilitySportPlayedID; }
     function getFacilitySportPlayedID() { return $this->FacilitySportPlayedID; }
     function setSportsPlayed($SportsPlayed) { $this->SportsPlayed = $SportsPlayed; }
@@ -64,7 +64,6 @@ class facility
 
     public function __construct()
     {
-        echo "facility construct";
         require_once('DbConnect.php');
         $conn = new DbConnect;
         $this->conn = $conn->connect();
@@ -72,8 +71,7 @@ class facility
 
     public function getFacilityCoordinates()
     {
-        echo "get faciltiy hahaha";
-        $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE Latitude IS NOT NULL AND Longitude
+        $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE lat IS NOT NULL AND lng
                 IS NOT NULL";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();

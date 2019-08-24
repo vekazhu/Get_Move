@@ -21,6 +21,9 @@
             height: 100%;
             border: 1px solid blue;
         }
+        #data, #allData{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -30,7 +33,12 @@
             require 'facility.php';
             $faci = new facility;
             $coll = $faci->getFacilityCoordinates();
-            print_r($coll); exit;
+            $coll = json_encode($coll, true);
+            echo '<div id="data">' . $coll . '</div>';
+
+            $allData = $faci->getFacilityCoordinates();
+            $allData = json_encode($allData, true);
+            echo '<div id="allData">' . $allData . '</div>';
          ?>
         <div id="map"></div>
     </div>
