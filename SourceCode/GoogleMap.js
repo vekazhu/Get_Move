@@ -126,16 +126,56 @@ function loadMap() {
     var allData = JSON.parse(document.getElementById('allData').innerHTML);
     showAllFacility(allData)
 
-
     function showAllFacility(allData) {
+        var pin = "../img/mapPin.png"
         Array.prototype.forEach.call(allData, function (data) {
             //var coordinates = {lat:data.lat, lng:data.lng};
+           /* var contentString = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" class="firstHeading"></h1>'+
+                '<div id="bodyContent">'+
+                '<p></p>'+
+                '</div>'+
+                '</div>'; */
+            var facName = data.FacilityName;
+            var facSport = data.SportsPlayed;
+            var infowindow = new google.maps.InfoWindow({
+                content: (facName + "\n" + facSport),
+                maxWidth: 200
+            });
+
             var marker = new google.maps.Marker({
                 //position: coordinates,
                 position: new google.maps.LatLng(data.lat, data.lng),
-                map: map
+                map: map,
+                icon: pin,
+                title: data.FacilityName
             });
-            console.log(marker);
+
+            /*marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            }); */
+
+            var ibTimeout;
+            google.maps.event.addListener(marker, "mouseover", function (e) {
+                console.log('inside marker');
+                infowindow.open(map, this);
+            });
+
+            google.maps.event.addListener(marker, "mouseout", function (e) {
+                ibTimeout = setTimeout(function(){
+                    infowindow.close();
+                }, 50);
+            });
+
+            google.maps.event.addListener(infowindow, 'domready', function(e){
+                $('.infobox').on('mouseenter', function(e){
+                    clearTimeout(ibTimeout);
+                }).on('mouseleave', function(e){
+                    clearTimeout(ibTimeout);
+                    infowindow.close();
+                }); });
         })
     }
 
