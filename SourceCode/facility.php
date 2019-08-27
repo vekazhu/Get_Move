@@ -1,6 +1,4 @@
 <?php
-
-
 class facility
 {
     private $ObjectID;
@@ -24,7 +22,6 @@ class facility
     private $conn;
     private $tableName = "SportsAndRecreation";
     private $dbName = "Get_Move";
-
     function setObjectID($ObjectID) { $this->ObjectID = $ObjectID; }
     function getObjectID() { return $this->ObjectID; }
     function setFacilityID($FacilityID) { $this->FacilityID = $FacilityID; }
@@ -61,15 +58,13 @@ class facility
     function getChangerooms() { return $this->Changerooms; }
     function setLGA($LGA) { $this->LGA = $LGA; }
     function getLGA() { return $this->LGA; }
-
     public function __construct()
     {
         require_once('DbConnect.php');
         $conn = new DbConnect;
         $this->conn = $conn->connect();
     }
-
-    public function getFacilityCoordinates()
+    public function getAllFacilities()
     {
         $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE lat IS NOT NULL AND lng
                 IS NOT NULL AND SportsPlayed LIKE 'Tennis%' OR SportsPlayed = 'Aerobics'
@@ -80,9 +75,49 @@ class facility
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getFacilitySportsPlayed()
+    public function getAerobics()
     {
+        $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE lat IS NOT NULL AND lng
+                IS NOT NULL AND SportsPlayed = 'Aerobics'";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    public function getCycling()
+    {
+        $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE lat IS NOT NULL AND lng
+                IS NOT NULL AND SportsPlayed = 'Cycling'";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getDancing()
+    {
+        $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE lat IS NOT NULL AND lng
+                IS NOT NULL AND SportsPlayed = 'Dancing'";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getFitness()
+    {
+        $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE lat IS NOT NULL AND lng
+                IS NOT NULL AND SportsPlayed LIKE '%Fitness' OR SportsPlayed LIKE 'Fitness%'";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTennis()
+    {
+        $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE lat IS NOT NULL AND lng
+                IS NOT NULL AND SportsPlayed LIKE 'Tennis%'";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>

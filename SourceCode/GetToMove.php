@@ -22,7 +22,7 @@
             border: 1px solid lightyellow;
             shape-outside: ellipse();
         }
-        #data, #allData{
+        #data, #allData, #aeroData{
             display: none;
         }
     </style>
@@ -58,31 +58,31 @@
         <div class="marker-filter">
         <span class="filter-box">
             <label for="Aerobics">
-                <input type="checkbox" name="Aerobics" value="Aerobics" id="Aerobics" onclick="aerobicCheck()";">
+                <input type="checkbox" name="Aerobics" value="Aerobics" id="Aerobics" onclick="aerobicCheck()">
                 Aerobics
             </label>
         </span>
             <span class="filter-box">
             <label for="Cycling">
-                <input type="checkbox" name="Cycling" value="Cycling" id="Cycling"  onclick="cyclingCheck()";">
+                <input type="checkbox" name="Cycling" value="Cycling" id="Cycling"  onclick="cyclingCheck()">
                 Cycling
             </label>
         </span>
             <span class="filter-box">
             <label for="Dancing">
-                <input type="checkbox" name="Dancing" value="Dancing" id="Dancing" onclick="dancingCheck()";">
+                <input type="checkbox" name="Dancing" value="Dancing" id="Dancing" onclick="dancingCheck()">
                 Dancing
             </label>
         </span>
             <span class="filter-box">
             <label for="Fitness">
-                <input type="checkbox" name="Fitness" value="Fitness" id="Fitness"  onclick="fitnessCheck()";">
+                <input type="checkbox" name="Fitness" value="Fitness" id="Fitness"  onclick="fitnessCheck()">
                 Fitness
             </label>
         </span>
         <span class="filter-box">
             <label for="Tennis">
-                <input type="checkbox" name="Tennis" value="Tennis" id="Tennis" checked  onclick="tennisCheck()";">
+                <input type="checkbox" name="Tennis" value="Tennis" id="Tennis" checked  onclick="tennisCheck()">
                Tennis
             </label>
         </span>
@@ -90,13 +90,17 @@
         <?php
             require 'facility.php';
             $faci = new facility;
-            $coll = $faci->getFacilityCoordinates();
+            $coll = $faci->getAllFacilities();
             $coll = json_encode($coll, true);
             echo '<div id="data">' . $coll . '</div>';
 
-            $allData = $faci->getFacilityCoordinates();
+            $allData = $faci->getAllFacilities();
             $allData = json_encode($allData, true);
             echo '<div id="allData">' . $allData . '</div>';
+
+            $aeroData = $faci->getAerobics();
+            $aeroData = json_encode($aeroData, true);
+            echo '<div id="aeroData">' . $aeroData . '</div>';
          ?>
 <div id="map"></div>
     </div>
