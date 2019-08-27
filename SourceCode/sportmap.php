@@ -96,7 +96,7 @@
         
     </header><!-- /#masthead -->
 
-<!--    <main id="main" class="site-main">-->
+    <main id="main" class="site-main">
 
         <section class="site-section-small section-blog">
 
@@ -186,7 +186,7 @@
 
         </section><!-- /.section-blog -->
 
-<!--    </main><!-- /.site-main -->-->
+    </main><!-- /.site-main -->
 
     <footer id="colophon" class="site-footer">
 
