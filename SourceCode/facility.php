@@ -72,10 +72,17 @@ class facility
     public function getFacilityCoordinates()
     {
         $sql = "SELECT * FROM $this->dbName.$this->tableName WHERE lat IS NOT NULL AND lng
-                IS NOT NULL";
+                IS NOT NULL AND SportsPlayed LIKE 'Tennis%' OR SportsPlayed = 'Aerobics'
+                OR SportsPlayed = 'Cycling' OR SportsPlayed = 'Dancing' OR SportsPlayed LIKE '%Fitness'
+                OR SportsPlayed LIKE 'Fitness%'";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getFacilitySportsPlayed()
+    {
+
     }
 }
 ?>

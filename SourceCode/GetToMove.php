@@ -55,6 +55,38 @@
 </nav>
     <div class="container">
         <center><h1>Get to move in Melbourne!</h1></center>
+        <div class="marker-filter">
+        <span class="filter-box">
+            <label for="Aerobics">
+                <input type="checkbox" name="Aerobics" value="Aerobics" id="Aerobics" onclick="aerobicCheck()";">
+                Aerobics
+            </label>
+        </span>
+            <span class="filter-box">
+            <label for="Cycling">
+                <input type="checkbox" name="Cycling" value="Cycling" id="Cycling"  onclick="cyclingCheck()";">
+                Cycling
+            </label>
+        </span>
+            <span class="filter-box">
+            <label for="Dancing">
+                <input type="checkbox" name="Dancing" value="Dancing" id="Dancing" onclick="dancingCheck()";">
+                Dancing
+            </label>
+        </span>
+            <span class="filter-box">
+            <label for="Fitness">
+                <input type="checkbox" name="Fitness" value="Fitness" id="Fitness"  onclick="fitnessCheck()";">
+                Fitness
+            </label>
+        </span>
+        <span class="filter-box">
+            <label for="Tennis">
+                <input type="checkbox" name="Tennis" value="Tennis" id="Tennis" checked  onclick="tennisCheck()";">
+               Tennis
+            </label>
+        </span>
+        </div>
         <?php
             require 'facility.php';
             $faci = new facility;
@@ -66,7 +98,7 @@
             $allData = json_encode($allData, true);
             echo '<div id="allData">' . $allData . '</div>';
          ?>
-        <div id="map"></div>
+<div id="map"></div>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFBcC-k-V5abg0sD4F257eSiFwl5CJnO8&callback=loadMap"
             async defer>

@@ -115,33 +115,26 @@ function loadMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: melbourne,
         zoom: 12,
-        mapTypeControlOptions: {
+        mapTypeControl: true,
+        mapTypeControlOptions:
+            {
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
-                'styled_map']
-        }
+                'styled_map'],
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+            }
     });
     map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
 
     var allData = JSON.parse(document.getElementById('allData').innerHTML);
-    showAllFacility(allData)
+    showAllFacility(allData);
 
     function showAllFacility(allData) {
-        var pin = "../img/mapPin.png"
+        var pin = "../img/mapPin.png";
         Array.prototype.forEach.call(allData, function (data) {
-            //var coordinates = {lat:data.lat, lng:data.lng};
-           /* var contentString = '<div id="content">'+
-                '<div id="siteNotice">'+
-                '</div>'+
-                '<h1 id="firstHeading" class="firstHeading"></h1>'+
-                '<div id="bodyContent">'+
-                '<p></p>'+
-                '</div>'+
-                '</div>'; */
-            var facName = data.FacilityName;
-            var facSport = data.SportsPlayed;
+            var content = data.FacilityName + "-" + data.SportsPlayed;
             var infowindow = new google.maps.InfoWindow({
-                content: (facName + "\n" + facSport),
+                content: content,
                 maxWidth: 200
             });
 
@@ -162,24 +155,81 @@ function loadMap() {
                 console.log('inside marker');
                 infowindow.open(map, this);
             });
-
             google.maps.event.addListener(marker, "mouseout", function (e) {
-                ibTimeout = setTimeout(function(){
+                ibTimeout = setTimeout(function () {
                     infowindow.close();
                 }, 50);
             });
 
-            google.maps.event.addListener(infowindow, 'domready', function(e){
-                $('.infobox').on('mouseenter', function(e){
+            google.maps.event.addListener(infowindow, 'domready', function (e) {
+                $('.infobox').on('mouseenter', function (e) {
                     clearTimeout(ibTimeout);
-                }).on('mouseleave', function(e){
+                }).on('mouseleave', function (e) {
                     clearTimeout(ibTimeout);
                     infowindow.close();
-                }); });
+                });
+            });
         })
     }
-
 }
+
+function aerobicCheck()
+{
+    var checkBox = document.getElementById("Aerobics");
+    /* var text = document.getElementById("text"); */
+    if (checkBox.checked == true){
+        print("box checked");
+    } else {
+        print("box unchecked");
+    }
+}
+
+function cyclingCheck()
+{
+    var checkBox = document.getElementById("Cycling");
+    /* var text = document.getElementById("text"); */
+    if (checkBox.checked == true){
+        print("box checked");
+    } else {
+        print("box unchecked");
+    }
+}
+
+function dancingCheck()
+{
+    var checkBox = document.getElementById("Dancing");
+    /* var text = document.getElementById("text"); */
+    if (checkBox.checked == true){
+        print("box checked");
+    } else {
+        print("box unchecked");
+    }
+}
+
+function fitnessCheck()
+{
+    var checkBox = document.getElementById("Fitness");
+    /* var text = document.getElementById("text"); */
+    if (checkBox.checked == true){
+        print("box checked");
+    } else {
+        print("box unchecked");
+    }
+}
+
+function tennisCheck()
+{
+    var checkBox = document.getElementById("Tennis");
+    /* var text = document.getElementById("text"); */
+    if (checkBox.checked == true){
+        print("box checked");
+    } else {
+        print("box unchecked");
+    }
+}
+
+
+
 
 
 
