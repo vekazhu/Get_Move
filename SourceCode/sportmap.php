@@ -41,7 +41,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script type="text/javascript" src="GoogleMap.js"></script>
     <style type="text/css">
         .container {
             height: 450px;
@@ -96,7 +95,7 @@
         
     </header><!-- /#masthead -->
 
-    <main id="main" class="site-main">
+<!--    <main id="main" class="site-main">-->
 
         <section class="site-section-small section-blog">
 
@@ -117,84 +116,58 @@
                 </ol><!-- /.breadcrumb -->
 
     <div class="container">
-            <H1>Insert Map Here</H1>
+            <H1>Chooe The Sport You Love</H1>
          <div class="marker-filter">
+<!--        <span class="filter-box">-->
+<!--            <label for="All">-->
+<!--                <input type="checkbox" name="All" value="All" id="All" onclick="addAllMarker()">-->
+<!--                All-->
+<!--            </label>-->
+<!--        </span>-->
         <span class="filter-box">
             <label for="Aerobics">
-                <input type="checkbox" name="Aerobics" value="Aerobics" id="Aerobics" onclick="aerobicCheck()">
+                <input type="checkbox" name="Aerobics" value="Aerobics" id="Aerobics" onclick="addAerobicMarker()">
                 Aerobics
             </label>
         </span>
         <span class="filter-box">
             <label for="Cycling">
-                <input type="checkbox" name="Cycling" value="Cycling" id="Cycling"  onclick="cyclingCheck()">
+                <input type="checkbox" name="Cycling" value="Cycling" id="Cycling"  onclick="addCyclingMarker()">
                 Cycling
             </label>
         </span>
         <span class="filter-box">
             <label for="Dancing">
-                <input type="checkbox" name="Dancing" value="Dancing" id="Dancing" onclick="dancingCheck()">
+                <input type="checkbox" name="Dancing" value="Dancing" id="Dancing" onclick="addDancingMarker()">
                 Dancing
             </label>
         </span>
         <span class="filter-box">
             <label for="Fitness">
-                <input type="checkbox" name="Fitness" value="Fitness" id="Fitness"  onclick="fitnessCheck()">
+                <input type="checkbox" name="Fitness" value="Fitness" id="Fitness"  onclick="addFitnessMarker()">
                 Fitness
             </label>
         </span>
         <span class="filter-box">
             <label for="Tennis">
-                <input type="checkbox" name="Tennis" value="Tennis" id="Tennis" checked  onclick="tennisCheck()">
+                <input type="checkbox" name="Tennis" value="Tennis" id="Tennis" onclick="addTennisMarker()">
                Tennis
             </label>
         </span>
          </div>
-                        <?php
-                        require 'facility.php';
-                        $faci = new facility;
-                        $coll = $faci->getAllFacilities();
-                        $coll = json_encode($coll, true);
-                        echo '<div id="data">' . $coll . '</div>';
-
-                        $allData = $faci->getAllFacilities();
-                        $allData = json_encode($allData, true);
-                        echo '<div id="allData">' . $allData . '</div>';
-
-                        $aeroData = $faci->getAerobics();
-                        $aeroData = json_encode($aeroData, true);
-                        echo '<div id="aeroData">' . $aeroData . '</div>';
-
-                        $cycData = $faci->getCycling();
-                        $cycData = json_encode($cycData, true);
-                        echo '<div id="cycData">' . $cycData . '</div>';
-
-                        $danData = $faci->getDancing();
-                        $danData = json_encode($danData, true);
-                        echo '<div id="danData">' . $danData . '</div>';
-
-                        $fitData = $faci->getFitness();
-                        $fitData = json_encode($fitData, true);
-                        echo '<div id="fitData">' . $fitData . '</div>';
-
-                        $tenData = $faci->getTennis();
-                        $tenData = json_encode($tenData, true);
-                        echo '<div id="tenData">' . $tenData . '</div>';
-    ?>
                         <div id="map"></div>
     </div>
 
-        </section><!-- /.section-blog -->
-
-    </main><!-- /.site-main -->
+        </section>
 
     <footer id="colophon" class="site-footer">
 
         <div class="copyright">
             <p>&copy; 2019 Get-Move | Made by <a href="#" class="yellow-text">Get-Move Project</a></p>
-        </div><!-- /.copyright -->
+        </div>
         
-    </footer><!-- /.site-footer -->
+    </footer>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -208,8 +181,360 @@
     <script src="../assets/js/skrollr.min.js"></script>
     <script src="../assets/js/jquery.countTo.min.js"></script>
 <!--    <script src="../assets/js/script.js"></script>-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFBcC-k-V5abg0sD4F257eSiFwl5CJnO8&callback=loadMap"
-            async defer>
-    </script>
+
 </body>
+<?php include_once 'facility.php'?>
+<script>
+var map;
+var marker;
+var locations = [];
+var aeroMarker = [];
+var cycMarker = [];
+var danMarker = [];
+var fitMarker = [];
+var tennisMarker = [];
+var aerobicsPin = "../img/aerobics.png";
+var cyclingPin = "../img/cycling.png";
+var dancingPin = "../img/dancing.png";
+var fitnessPin = "../img/fitness.png";
+var tennisPin = "../img/tennis.png";
+
+function loadMap() {
+    var melbourne = {lat: -37.814, lng: 144.963};
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: melbourne,
+        zoom: 12,
+        mapTypeControl: true,
+        mapTypeControlOptions:
+            {
+                mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+                    'styled_map'],
+                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+            }
+    });
+}
+
+//function addAllMarker()
+//{
+//    locations = <?php //getAllFacility() ?>//;
+//    var checkBox = document.getElementById("All");
+//    if (checkBox.checked == true){
+//        var markers = [];
+//        var i;
+//        for (i = 0; i < locations.length; i++)
+//        {
+//            var infowindow = new google.maps.InfoWindow({
+//                content: locations[i][0],
+//                maxWidth: 200
+//            });
+//            var marker = new google.maps.Marker({
+//                //position: coordinates,
+//                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+//                map: map,
+//                icon: pin,
+//                title: locations[i][0]
+//            });
+//
+//            var ibTimeout;
+//            google.maps.event.addListener(marker, "mouseover", function (e) {
+//                console.log('inside marker');
+//                infowindow.open(map, this);
+//            });
+//            google.maps.event.addListener(marker, "mouseout", function (e) {
+//                ibTimeout = setTimeout(function () {
+//                    infowindow.close();
+//                }, 50);
+//            });
+//
+//            google.maps.event.addListener(infowindow, 'domready', function (e) {
+//                $('.infobox').on('mouseenter', function (e) {
+//                    clearTimeout(ibTimeout);
+//                }).on('mouseleave', function (e) {
+//                    clearTimeout(ibTimeout);
+//                    infowindow.close();
+//                });
+//            });
+//            markers.push(marker);
+//        }
+//        allMarker = markers;
+//    } else {
+//        for (var i = 0; i < allMarker.length; i++)
+//        {
+//            allMarker[i].setMap(null);
+//        }
+//     }
+//}
+
+    function addAerobicMarker()
+    {
+        locations = <?php getAllFacility() ?>;
+        var checkBox = document.getElementById("Aerobics");
+        /* var text = document.getElementById("text"); */
+        if (checkBox.checked == true){
+            var markers = [];
+            var i;
+            for (i = 0; i < locations.length; i++)
+            {
+                if (locations[i][3] == "Aerobics" )
+                {
+                    var infowindow = new google.maps.InfoWindow({
+                        content: locations[i][0],
+                        maxWidth: 200
+                    });
+                    var marker = new google.maps.Marker({
+                        //position: coordinates,
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map,
+                        icon: aerobicsPin,
+                        title: locations[i][0]
+                    });
+                    var ibTimeout;
+                    google.maps.event.addListener(marker, "mouseover", function (e) {
+                        console.log('inside marker');
+                        infowindow.open(map, this);
+                    });
+                    google.maps.event.addListener(marker, "mouseout", function (e) {
+                        ibTimeout = setTimeout(function () {
+                            infowindow.close();
+                        }, 50);
+                    });
+
+                    google.maps.event.addListener(infowindow, 'domready', function (e) {
+                        $('.infobox').on('mouseenter', function (e) {
+                            clearTimeout(ibTimeout);
+                        }).on('mouseleave', function (e) {
+                            clearTimeout(ibTimeout);
+                            infowindow.close();
+                        });
+                    });
+                    markers.push(marker);
+                }
+            }
+            aeroMarker = markers;
+        } else {
+            for (var i = 0; i < aeroMarker.length; i++)
+            {
+                aeroMarker[i].setMap(null);
+            }
+        }
+
+    }
+
+function addCyclingMarker()
+{
+    locations = <?php getAllFacility() ?>;
+    var checkBox = document.getElementById("Cycling");
+    /* var text = document.getElementById("text"); */
+    if (checkBox.checked == true){
+        var markers = [];
+        var i;
+        for (i = 0; i < locations.length; i++)
+        {
+            if (locations[i][3] == "Cycling" )
+            {
+                var infowindow = new google.maps.InfoWindow({
+                    content: locations[i][0],
+                    maxWidth: 200
+                });
+                var marker = new google.maps.Marker({
+                    //position: coordinates,
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map,
+                    icon: cyclingPin,
+                    title: locations[i][0]
+                });
+                var ibTimeout;
+                google.maps.event.addListener(marker, "mouseover", function (e) {
+                    console.log('inside marker');
+                    infowindow.open(map, this);
+                });
+                google.maps.event.addListener(marker, "mouseout", function (e) {
+                    ibTimeout = setTimeout(function () {
+                        infowindow.close();
+                    }, 50);
+                });
+
+                google.maps.event.addListener(infowindow, 'domready', function (e) {
+                    $('.infobox').on('mouseenter', function (e) {
+                        clearTimeout(ibTimeout);
+                    }).on('mouseleave', function (e) {
+                        clearTimeout(ibTimeout);
+                        infowindow.close();
+                    });
+                });
+                markers.push(marker);
+            }
+        }
+        cycMarker = markers;
+    } else {
+        for (var i = 0; i < cycMarker.length; i++)
+        {
+            cycMarker[i].setMap(null);
+        }
+    }
+}
+function addDancingMarker()
+{
+    locations = <?php getAllFacility() ?>;
+    var checkBox = document.getElementById("Dancing");
+    /* var text = document.getElementById("text"); */
+    if (checkBox.checked == true){
+        var markers = [];
+        var i;
+        for (i = 0; i < locations.length; i++)
+        {
+            if (locations[i][3] == "Dancing" )
+            {
+                var infowindow = new google.maps.InfoWindow({
+                    content: locations[i][0],
+                    maxWidth: 200
+                });
+                var marker = new google.maps.Marker({
+                    //position: coordinates,
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map,
+                    icon: dancingPin,
+                    title: locations[i][0]
+                });
+                var ibTimeout;
+                google.maps.event.addListener(marker, "mouseover", function (e) {
+                    console.log('inside marker');
+                    infowindow.open(map, this);
+                });
+                google.maps.event.addListener(marker, "mouseout", function (e) {
+                    ibTimeout = setTimeout(function () {
+                        infowindow.close();
+                    }, 50);
+                });
+
+                google.maps.event.addListener(infowindow, 'domready', function (e) {
+                    $('.infobox').on('mouseenter', function (e) {
+                        clearTimeout(ibTimeout);
+                    }).on('mouseleave', function (e) {
+                        clearTimeout(ibTimeout);
+                        infowindow.close();
+                    });
+                });
+                markers.push(marker);
+            }
+        }
+        danMarker = markers;
+    } else {
+        for (var i = 0; i < danMarker.length; i++)
+        {
+            danMarker[i].setMap(null);
+        }
+    }
+}
+
+    function addFitnessMarker()
+    {
+        locations = <?php getAllFacility() ?>;
+        var checkBox = document.getElementById("Fitness");
+        /* var text = document.getElementById("text"); */
+        if (checkBox.checked == true){
+            var markers = [];
+            var i;
+            for (i = 0; i < locations.length; i++)
+            {
+                if (locations[i][3].startsWith("Fitness") || locations[i][3].endsWith("Fitness"))
+                {
+                    var infowindow = new google.maps.InfoWindow({
+                        content: locations[i][0],
+                        maxWidth: 200
+                    });
+                    var marker = new google.maps.Marker({
+                        //position: coordinates,
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map,
+                        icon: fitnessPin,
+                        title: locations[i][0]
+                    });
+                    var ibTimeout;
+                    google.maps.event.addListener(marker, "mouseover", function (e) {
+                        console.log('inside marker');
+                        infowindow.open(map, this);
+                    });
+                    google.maps.event.addListener(marker, "mouseout", function (e) {
+                        ibTimeout = setTimeout(function () {
+                            infowindow.close();
+                        }, 50);
+                    });
+                    google.maps.event.addListener(infowindow, 'domready', function (e) {
+                        $('.infobox').on('mouseenter', function (e) {
+                            clearTimeout(ibTimeout);
+                        }).on('mouseleave', function (e) {
+                            clearTimeout(ibTimeout);
+                            infowindow.close();
+                        });
+                    });
+                    markers.push(marker);
+                }
+            }
+            fitMarker = markers;
+        } else {
+            for (var i = 0; i < fitMarker.length; i++)
+            {
+                fitMarker[i].setMap(null);
+            }
+        }
+    }
+
+function addTennisMarker()
+{
+    locations = <?php getAllFacility() ?>;
+    var checkBox = document.getElementById("Tennis");
+    /* var text = document.getElementById("text"); */
+    if (checkBox.checked == true){
+        var markers = [];
+        var i;
+        for (i = 0; i < locations.length; i++)
+        {
+            if (locations[i][3].startsWith("Tennis"))
+            {
+                var infowindow = new google.maps.InfoWindow({
+                    content: locations[i][0],
+                    maxWidth: 200
+                });
+                var marker = new google.maps.Marker({
+                    //position: coordinates,
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map,
+                    icon: tennisPin,
+                    title: locations[i][0]
+                });
+                var ibTimeout;
+                google.maps.event.addListener(marker, "mouseover", function (e) {
+                    console.log('inside marker');
+                    infowindow.open(map, this);
+                });
+                google.maps.event.addListener(marker, "mouseout", function (e) {
+                    ibTimeout = setTimeout(function () {
+                        infowindow.close();
+                    }, 50);
+                });
+                google.maps.event.addListener(infowindow, 'domready', function (e) {
+                    $('.infobox').on('mouseenter', function (e) {
+                        clearTimeout(ibTimeout);
+                    }).on('mouseleave', function (e) {
+                        clearTimeout(ibTimeout);
+                        infowindow.close();
+                    });
+                });
+                markers.push(marker);
+            }
+        }
+        tennisMarker = markers;
+    } else {
+        for (var i = 0; i < tennisMarker.length; i++)
+        {
+            tennisMarker[i].setMap(null);
+        }
+    }
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFBcC-k-V5abg0sD4F257eSiFwl5CJnO8&callback=loadMap"
+        async defer>
+</script>
+
 </html>
