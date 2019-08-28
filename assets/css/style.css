@@ -199,7 +199,10 @@ input[type=search] + button:focus {
 }
 
 /* Checkbox fields */
-input[type=checkbox],
+input[type=checkbox]{
+ width: 15px;
+ height: 15px;
+}
 input[type=radio] {
     position: absolute;
     visibility: hidden;
