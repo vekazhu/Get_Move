@@ -4,9 +4,9 @@
 class DbConnect
 {
     private $host = "127.0.0.1";
-    private $dbName = "Get_Move";
+    private $dbName = "GetMove";
     private $user = "root";
-    private $pass = "Veka0810!";
+    private $pass = "root";
 
     public function connect()
     {
@@ -18,7 +18,7 @@ class DbConnect
         } catch (PDOException $e) {
             echo 'Database Error: ' . $e->getMessage();
         }
-        $conn = mysqli_connect("127.0.0.1","root","Veka0810!", "Get_Move");
+        $conn = mysqli_connect("127.0.0.1","root","root", "GetMove");
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
