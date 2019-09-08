@@ -12,8 +12,8 @@ function dbConnect()
 function getAllFacility()
 {
     $conn = dbConnect();
-    $allData = mysqli_query($conn, "select FacilityName, lat, lng, SportsPlayed, SuburbTown from 
-    SportsAndRecreation");
+    $allData = mysqli_query($conn, "select FacilityName, lat, lng, SportsPlayed, SuburbTown, StreetNo, StreetName,
+    StreetType from SportsAndRecreation");
 
     $rows = array();
     while($r = mysqli_fetch_assoc($allData))

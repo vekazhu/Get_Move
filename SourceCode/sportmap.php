@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Places to move more | Get-Move</title>
+    <title>Places to exercise more | Get-Move</title>
 
     <meta name="description" content="BusinessPerfect - Freebie HTML/CSS template based on Bootstrap">
     <meta name="author" content="Milan Savov">
@@ -76,15 +76,13 @@
 
                         <li><a href="index.html">Home</a></li>
                         <li class="dropdown active">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Places to move more<i class="fa fa-angle-down hidden-xs" aria-hidden="true"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Places to do exercise<i class="fa fa-angle-down hidden-xs" aria-hidden="true"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="sportmap.php">Sport places in Melbourne</a></li>
-                                <li><a href="#">Interesting places near your office</a></li>
+                                <li><a href="sportmap.php">Exercise places in Melbourne</a></li>
                             </ul>                            
                             <!-- /.dropdown-menu -->
                         </li><!-- /.dropdown -->
-                        <li><a href="#">Exercise at your desk</a></li> 
-                        <li><a href="#">Exercise records</a></li>                        
+
                     </ul><!-- /.navbar-nav -->
 
                 </div><!-- /.navbar-collapse -->
@@ -103,20 +101,20 @@
 
                 <div class="text-center">
 
-                    <h1 class="section-title-big">Sport places in Melbourne</h1>
+                    <h1 class="section-title-big">Exercise places in Melbourne</h1>
                     <!--<p class="section-text">Find Sport Places in Melbourne</p> -->
                 
                 </div>
 
                 <ol class="breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li class="active">Places to move more</li>
+                    <li class="active">Places to exercise more</li>
 
 
                 </ol><!-- /.breadcrumb -->
 
     <div class="container">
-            <H1>Chooe The Sport You Love</H1>
+            <H1>Chooe The Exercise You Love</H1>
          <div class="marker-filter">
 <!--        <span class="filter-box">-->
 <!--            <label for="All">-->
@@ -143,15 +141,9 @@
             </label>
         </span>
         <span class="filter-box">
-            <label for="Fitness">
-                <input type="checkbox" name="Fitness" value="Fitness" id="Fitness"  onclick="addFitnessMarker()">
-                Fitness
-            </label>
-        </span>
-        <span class="filter-box">
-            <label for="Tennis">
-                <input type="checkbox" name="Tennis" value="Tennis" id="Tennis" onclick="addTennisMarker()">
-               Tennis
+            <label for="Swimming">
+                <input type="checkbox" name="Swimming" value="Swimming" id="Swimming"  onclick="addSwimmingMarker()">
+                Swimming
             </label>
         </span>
          </div>
@@ -185,19 +177,19 @@
 </body>
 <?php include_once 'facility.php'?>
 <script>
+
 var map;
 var marker;
 var locations = [];
 var aeroMarker = [];
 var cycMarker = [];
 var danMarker = [];
-var fitMarker = [];
-var tennisMarker = [];
+var swimMarker = [];
 var aerobicsPin = "../img/aerobics.png";
 var cyclingPin = "../img/cycling.png";
 var dancingPin = "../img/dancing.png";
-var fitnessPin = "../img/fitness.png";
-var tennisPin = "../img/tennis.png";
+var swimmingPin = "../img/swim.png";
+var currentPin = "../img/mapPin.png";
 
 function loadMap() {
     var melbourne = {lat: -37.814, lng: 144.963};
@@ -212,113 +204,90 @@ function loadMap() {
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
             }
     });
+
+    infoWindow = new google.maps.InfoWindow;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            var infowindow = new google.maps.InfoWindow({
+                content: "Current Location"
+            });
+            var marker = new google.maps.Marker({
+                //position: coordinates,
+                position: pos,
+                map: map,
+                icon: currentPin
+            });
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+
+
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
 }
 
-//function addAllMarker()
-//{
-//    locations = <?php //getAllFacility() ?>//;
-//    var checkBox = document.getElementById("All");
-//    if (checkBox.checked == true){
-//        var markers = [];
-//        var i;
-//        for (i = 0; i < locations.length; i++)
-//        {
-//            var infowindow = new google.maps.InfoWindow({
-//                content: locations[i][0],
-//                maxWidth: 200
-//            });
-//            var marker = new google.maps.Marker({
-//                //position: coordinates,
-//                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-//                map: map,
-//                icon: pin,
-//                title: locations[i][0]
-//            });
-//
-//            var ibTimeout;
-//            google.maps.event.addListener(marker, "mouseover", function (e) {
-//                console.log('inside marker');
-//                infowindow.open(map, this);
-//            });
-//            google.maps.event.addListener(marker, "mouseout", function (e) {
-//                ibTimeout = setTimeout(function () {
-//                    infowindow.close();
-//                }, 50);
-//            });
-//
-//            google.maps.event.addListener(infowindow, 'domready', function (e) {
-//                $('.infobox').on('mouseenter', function (e) {
-//                    clearTimeout(ibTimeout);
-//                }).on('mouseleave', function (e) {
-//                    clearTimeout(ibTimeout);
-//                    infowindow.close();
-//                });
-//            });
-//            markers.push(marker);
-//        }
-//        allMarker = markers;
-//    } else {
-//        for (var i = 0; i < allMarker.length; i++)
-//        {
-//            allMarker[i].setMap(null);
-//        }
-//     }
-//}
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
 
-    function addAerobicMarker()
-    {
+}
+
+    function addAerobicMarker() {
         locations = <?php getAllFacility() ?>;
         var checkBox = document.getElementById("Aerobics");
         /* var text = document.getElementById("text"); */
-        if (checkBox.checked == true){
+        if (checkBox.checked == true) {
             var markers = [];
             var i;
-            for (i = 0; i < locations.length; i++)
-            {
-                if (locations[i][3] == "Aerobics" )
-                {
+            for (i = 0; i < locations.length; i++) {
+                // console.log(contentString);
+                if (locations[i][3] == "Aerobics") {
+                    var contentString = locations[i][0] + ", " + locations[i][5] + " "
+                        + locations[i][6] + " " + locations[i][7];
                     var infowindow = new google.maps.InfoWindow({
-                        content: locations[i][0],
-                        maxWidth: 200
+                        content: contentString
                     });
                     var marker = new google.maps.Marker({
                         //position: coordinates,
                         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
                         map: map,
                         icon: aerobicsPin,
-                        title: locations[i][0]
+                        title: locations[i][0],
+                        info: contentString
                     });
-                    var ibTimeout;
-                    google.maps.event.addListener(marker, "mouseover", function (e) {
-                        console.log('inside marker');
+                    google.maps.event.addListener(marker, 'click', function () {
+                        infowindow.setContent(this.info);
                         infowindow.open(map, this);
-                    });
-                    google.maps.event.addListener(marker, "mouseout", function (e) {
-                        ibTimeout = setTimeout(function () {
-                            infowindow.close();
-                        }, 50);
-                    });
-
-                    google.maps.event.addListener(infowindow, 'domready', function (e) {
-                        $('.infobox').on('mouseenter', function (e) {
-                            clearTimeout(ibTimeout);
-                        }).on('mouseleave', function (e) {
-                            clearTimeout(ibTimeout);
-                            infowindow.close();
-                        });
                     });
                     markers.push(marker);
                 }
-            }
-            aeroMarker = markers;
-        } else {
-            for (var i = 0; i < aeroMarker.length; i++)
-            {
-                aeroMarker[i].setMap(null);
+                aeroMarker = markers;
             }
         }
+            else
+                {
+                    for (var i = 0; i < aeroMarker.length; i++)
+                    {
+                        aeroMarker[i].setMap(null);
+                    }
+                }
+
 
     }
+
+
 
 function addCyclingMarker()
 {
@@ -332,40 +301,30 @@ function addCyclingMarker()
         {
             if (locations[i][3] == "Cycling" )
             {
+                var contentString = locations[i][0] + ", " + locations[i][5] + " "
+                    + locations[i][6] + " " + locations[i][7];
                 var infowindow = new google.maps.InfoWindow({
-                    content: locations[i][0],
-                    maxWidth: 200
+                    content: contentString
                 });
                 var marker = new google.maps.Marker({
                     //position: coordinates,
                     position: new google.maps.LatLng(locations[i][1], locations[i][2]),
                     map: map,
                     icon: cyclingPin,
-                    title: locations[i][0]
+                    title: locations[i][0],
+                    info: contentString
                 });
-                var ibTimeout;
-                google.maps.event.addListener(marker, "mouseover", function (e) {
-                    console.log('inside marker');
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.setContent(this.info);
                     infowindow.open(map, this);
                 });
-                google.maps.event.addListener(marker, "mouseout", function (e) {
-                    ibTimeout = setTimeout(function () {
-                        infowindow.close();
-                    }, 50);
-                });
-
-                google.maps.event.addListener(infowindow, 'domready', function (e) {
-                    $('.infobox').on('mouseenter', function (e) {
-                        clearTimeout(ibTimeout);
-                    }).on('mouseleave', function (e) {
-                        clearTimeout(ibTimeout);
-                        infowindow.close();
-                    });
-                });
                 markers.push(marker);
+
             }
         }
         cycMarker = markers;
+        // var markerCluster = new MarkerClusterer(map, markers,
+        //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     } else {
         for (var i = 0; i < cycMarker.length; i++)
         {
@@ -385,40 +344,29 @@ function addDancingMarker()
         {
             if (locations[i][3] == "Dancing" )
             {
+                var contentString = locations[i][0] + ", " + locations[i][5] + " "
+                    + locations[i][6] + " " + locations[i][7];
                 var infowindow = new google.maps.InfoWindow({
-                    content: locations[i][0],
-                    maxWidth: 200
+                    content: contentString
                 });
                 var marker = new google.maps.Marker({
                     //position: coordinates,
                     position: new google.maps.LatLng(locations[i][1], locations[i][2]),
                     map: map,
                     icon: dancingPin,
-                    title: locations[i][0]
+                    title: locations[i][0],
+                    info: contentString
                 });
-                var ibTimeout;
-                google.maps.event.addListener(marker, "mouseover", function (e) {
-                    console.log('inside marker');
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.setContent(this.info);
                     infowindow.open(map, this);
-                });
-                google.maps.event.addListener(marker, "mouseout", function (e) {
-                    ibTimeout = setTimeout(function () {
-                        infowindow.close();
-                    }, 50);
-                });
-
-                google.maps.event.addListener(infowindow, 'domready', function (e) {
-                    $('.infobox').on('mouseenter', function (e) {
-                        clearTimeout(ibTimeout);
-                    }).on('mouseleave', function (e) {
-                        clearTimeout(ibTimeout);
-                        infowindow.close();
-                    });
                 });
                 markers.push(marker);
             }
         }
         danMarker = markers;
+        // var markerCluster = new MarkerClusterer(map, markers,
+        //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     } else {
         for (var i = 0; i < danMarker.length; i++)
         {
@@ -427,111 +375,51 @@ function addDancingMarker()
     }
 }
 
-    function addFitnessMarker()
+    function addSwimmingMarker()
     {
         locations = <?php getAllFacility() ?>;
-        var checkBox = document.getElementById("Fitness");
+        var checkBox = document.getElementById("Swimming");
         /* var text = document.getElementById("text"); */
         if (checkBox.checked == true){
             var markers = [];
             var i;
             for (i = 0; i < locations.length; i++)
             {
-                if (locations[i][3].startsWith("Fitness") || locations[i][3].endsWith("Fitness"))
+                if (locations[i][3] == 'Swimming')
                 {
+                    var contentString = locations[i][0] + ", " + locations[i][5] + " "
+                        + locations[i][6] + " " + locations[i][7];
                     var infowindow = new google.maps.InfoWindow({
-                        content: locations[i][0],
-                        maxWidth: 200
+                        content: contentString
                     });
                     var marker = new google.maps.Marker({
                         //position: coordinates,
                         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
                         map: map,
-                        icon: fitnessPin,
-                        title: locations[i][0]
+                        icon: swimmingPin,
+                        title: locations[i][0],
+                        info: contentString
                     });
-                    var ibTimeout;
-                    google.maps.event.addListener(marker, "mouseover", function (e) {
-                        console.log('inside marker');
+                    google.maps.event.addListener(marker, 'click', function () {
+                        infowindow.setContent(this.info);
                         infowindow.open(map, this);
-                    });
-                    google.maps.event.addListener(marker, "mouseout", function (e) {
-                        ibTimeout = setTimeout(function () {
-                            infowindow.close();
-                        }, 50);
-                    });
-                    google.maps.event.addListener(infowindow, 'domready', function (e) {
-                        $('.infobox').on('mouseenter', function (e) {
-                            clearTimeout(ibTimeout);
-                        }).on('mouseleave', function (e) {
-                            clearTimeout(ibTimeout);
-                            infowindow.close();
-                        });
                     });
                     markers.push(marker);
                 }
             }
-            fitMarker = markers;
+            swimMarker = markers;
+            // var markerCluster = new MarkerClusterer(map, markers,
+            //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
         } else {
-            for (var i = 0; i < fitMarker.length; i++)
+            for (var i = 0; i < swimMarker.length; i++)
             {
-                fitMarker[i].setMap(null);
+                swimMarker[i].setMap(null);
+                // markerCluster.redraw(markerCluster.);
             }
         }
     }
-
-function addTennisMarker()
-{
-    locations = <?php getAllFacility() ?>;
-    var checkBox = document.getElementById("Tennis");
-    /* var text = document.getElementById("text"); */
-    if (checkBox.checked == true){
-        var markers = [];
-        var i;
-        for (i = 0; i < locations.length; i++)
-        {
-            if (locations[i][3].startsWith("Tennis"))
-            {
-                var infowindow = new google.maps.InfoWindow({
-                    content: locations[i][0],
-                    maxWidth: 200
-                });
-                var marker = new google.maps.Marker({
-                    //position: coordinates,
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map,
-                    icon: tennisPin,
-                    title: locations[i][0]
-                });
-                var ibTimeout;
-                google.maps.event.addListener(marker, "mouseover", function (e) {
-                    console.log('inside marker');
-                    infowindow.open(map, this);
-                });
-                google.maps.event.addListener(marker, "mouseout", function (e) {
-                    ibTimeout = setTimeout(function () {
-                        infowindow.close();
-                    }, 50);
-                });
-                google.maps.event.addListener(infowindow, 'domready', function (e) {
-                    $('.infobox').on('mouseenter', function (e) {
-                        clearTimeout(ibTimeout);
-                    }).on('mouseleave', function (e) {
-                        clearTimeout(ibTimeout);
-                        infowindow.close();
-                    });
-                });
-                markers.push(marker);
-            }
-        }
-        tennisMarker = markers;
-    } else {
-        for (var i = 0; i < tennisMarker.length; i++)
-        {
-            tennisMarker[i].setMap(null);
-        }
-    }
-}
+</script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFBcC-k-V5abg0sD4F257eSiFwl5CJnO8&callback=loadMap"
         async defer>
