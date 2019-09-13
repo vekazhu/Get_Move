@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Places to exercise more | Get-Move</title>
+    <title>Places to move more | Get-Move</title>
 
     <meta name="description" content="BusinessPerfect - Freebie HTML/CSS template based on Bootstrap">
     <meta name="author" content="Milan Savov">
@@ -41,6 +41,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript" src="GoogleMap.js"></script>
     <style type="text/css">
         .container {
             height: 450px;
@@ -76,13 +77,15 @@
 
                         <li><a href="index.html">Home</a></li>
                         <li class="dropdown active">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Places to do exercise<i class="fa fa-angle-down hidden-xs" aria-hidden="true"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Places to move more<i class="fa fa-angle-down hidden-xs" aria-hidden="true"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="sportmap.php">Exercise places in Melbourne</a></li>
+                                <li><a href="sportmap.php">Sport places in Melbourne</a></li>
+                                <li><a href="#">Interesting places near your office</a></li>
                             </ul>                            
                             <!-- /.dropdown-menu -->
                         </li><!-- /.dropdown -->
-
+                        <li><a href="#">Exercise at your desk</a></li> 
+                        <li><a href="#">Exercise records</a></li>                        
                     </ul><!-- /.navbar-nav -->
 
                 </div><!-- /.navbar-collapse -->
@@ -93,7 +96,7 @@
         
     </header><!-- /#masthead -->
 
-<!--    <main id="main" class="site-main">-->
+    <main id="main" class="site-main">
 
         <section class="site-section-small section-blog">
 
@@ -101,65 +104,97 @@
 
                 <div class="text-center">
 
-                    <h1 class="section-title-big">Exercise places in Melbourne</h1>
+                    <h1 class="section-title-big">Sport places in Melbourne</h1>
                     <!--<p class="section-text">Find Sport Places in Melbourne</p> -->
                 
                 </div>
 
                 <ol class="breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li class="active">Places to exercise more</li>
-
-
+                    <li class="active">Places to move more</li>
+                    <li class="active">Sport places in Melbourne</li>
+                    
                 </ol><!-- /.breadcrumb -->
 
     <div class="container">
-            <H1>Chooe The Exercise You Love</H1>
+            <H1>Insert Map Here</H1>
          <div class="marker-filter">
-<!--        <span class="filter-box">-->
-<!--            <label for="All">-->
-<!--                <input type="checkbox" name="All" value="All" id="All" onclick="addAllMarker()">-->
-<!--                All-->
-<!--            </label>-->
-<!--        </span>-->
         <span class="filter-box">
             <label for="Aerobics">
-                <input type="checkbox" name="Aerobics" value="Aerobics" id="Aerobics" onclick="addAerobicMarker()">
+                <input type="checkbox" name="Aerobics" value="Aerobics" id="Aerobics" onclick="aerobicCheck()">
                 Aerobics
             </label>
         </span>
         <span class="filter-box">
             <label for="Cycling">
-                <input type="checkbox" name="Cycling" value="Cycling" id="Cycling"  onclick="addCyclingMarker()">
+                <input type="checkbox" name="Cycling" value="Cycling" id="Cycling"  onclick="cyclingCheck()">
                 Cycling
             </label>
         </span>
         <span class="filter-box">
             <label for="Dancing">
-                <input type="checkbox" name="Dancing" value="Dancing" id="Dancing" onclick="addDancingMarker()">
+                <input type="checkbox" name="Dancing" value="Dancing" id="Dancing" onclick="dancingCheck()">
                 Dancing
             </label>
         </span>
         <span class="filter-box">
-            <label for="Swimming">
-                <input type="checkbox" name="Swimming" value="Swimming" id="Swimming"  onclick="addSwimmingMarker()">
-                Swimming
+            <label for="Fitness">
+                <input type="checkbox" name="Fitness" value="Fitness" id="Fitness"  onclick="fitnessCheck()">
+                Fitness
+            </label>
+        </span>
+        <span class="filter-box">
+            <label for="Tennis">
+                <input type="checkbox" name="Tennis" value="Tennis" id="Tennis" checked  onclick="tennisCheck()">
+               Tennis
             </label>
         </span>
          </div>
+                        <?php
+                        require 'facility.php';
+                        $faci = new facility;
+                        $coll = $faci->getAllFacilities();
+                        $coll = json_encode($coll, true);
+                        echo '<div id="data">' . $coll . '</div>';
+
+                        $allData = $faci->getAllFacilities();
+                        $allData = json_encode($allData, true);
+                        echo '<div id="allData">' . $allData . '</div>';
+
+                        $aeroData = $faci->getAerobics();
+                        $aeroData = json_encode($aeroData, true);
+                        echo '<div id="aeroData">' . $aeroData . '</div>';
+
+                        $cycData = $faci->getCycling();
+                        $cycData = json_encode($cycData, true);
+                        echo '<div id="cycData">' . $cycData . '</div>';
+
+                        $danData = $faci->getDancing();
+                        $danData = json_encode($danData, true);
+                        echo '<div id="danData">' . $danData . '</div>';
+
+                        $fitData = $faci->getFitness();
+                        $fitData = json_encode($fitData, true);
+                        echo '<div id="fitData">' . $fitData . '</div>';
+
+                        $tenData = $faci->getTennis();
+                        $tenData = json_encode($tenData, true);
+                        echo '<div id="tenData">' . $tenData . '</div>';
+    ?>
                         <div id="map"></div>
     </div>
 
-        </section>
+        </section><!-- /.section-blog -->
+
+    </main><!-- /.site-main -->
 
     <footer id="colophon" class="site-footer">
 
         <div class="copyright">
             <p>&copy; 2019 Get-Move | Made by <a href="#" class="yellow-text">Get-Move Project</a></p>
-        </div>
+        </div><!-- /.copyright -->
         
-    </footer>
-
+    </footer><!-- /.site-footer -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -173,256 +208,8 @@
     <script src="../assets/js/skrollr.min.js"></script>
     <script src="../assets/js/jquery.countTo.min.js"></script>
 <!--    <script src="../assets/js/script.js"></script>-->
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFBcC-k-V5abg0sD4F257eSiFwl5CJnO8&callback=loadMap"
+            async defer>
+    </script>
 </body>
-<?php include_once 'facility.php'?>
-<script>
-
-var map;
-var marker;
-var locations = [];
-var aeroMarker = [];
-var cycMarker = [];
-var danMarker = [];
-var swimMarker = [];
-var aerobicsPin = "../img/aerobics.png";
-var cyclingPin = "../img/cycling.png";
-var dancingPin = "../img/dancing.png";
-var swimmingPin = "../img/swim.png";
-var currentPin = "../img/mapPin.png";
-
-function loadMap() {
-    var melbourne = {lat: -37.814, lng: 144.963};
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: melbourne,
-        zoom: 12,
-        mapTypeControl: true,
-        mapTypeControlOptions:
-            {
-                mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
-                    'styled_map'],
-                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-            }
-    });
-
-    infoWindow = new google.maps.InfoWindow;
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            var infowindow = new google.maps.InfoWindow({
-                content: "Current Location"
-            });
-            var marker = new google.maps.Marker({
-                //position: coordinates,
-                position: pos,
-                map: map,
-                icon: currentPin
-            });
-            marker.addListener('click', function() {
-                infowindow.open(map, marker);
-            });
-
-
-        }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-}
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-
-}
-
-    function addAerobicMarker() {
-        locations = <?php getAllFacility() ?>;
-        var checkBox = document.getElementById("Aerobics");
-        /* var text = document.getElementById("text"); */
-        if (checkBox.checked == true) {
-            var markers = [];
-            var i;
-            for (i = 0; i < locations.length; i++) {
-                // console.log(contentString);
-                if (locations[i][3] == "Aerobics") {
-                    var contentString = locations[i][0] + ", " + locations[i][5] + " "
-                        + locations[i][6] + " " + locations[i][7];
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString
-                    });
-                    var marker = new google.maps.Marker({
-                        //position: coordinates,
-                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                        map: map,
-                        icon: aerobicsPin,
-                        title: locations[i][0],
-                        info: contentString
-                    });
-                    google.maps.event.addListener(marker, 'click', function () {
-                        infowindow.setContent(this.info);
-                        infowindow.open(map, this);
-                    });
-                    markers.push(marker);
-                }
-                aeroMarker = markers;
-            }
-        }
-            else
-                {
-                    for (var i = 0; i < aeroMarker.length; i++)
-                    {
-                        aeroMarker[i].setMap(null);
-                    }
-                }
-
-
-    }
-
-
-
-function addCyclingMarker()
-{
-    locations = <?php getAllFacility() ?>;
-    var checkBox = document.getElementById("Cycling");
-    /* var text = document.getElementById("text"); */
-    if (checkBox.checked == true){
-        var markers = [];
-        var i;
-        for (i = 0; i < locations.length; i++)
-        {
-            if (locations[i][3] == "Cycling" )
-            {
-                var contentString = locations[i][0] + ", " + locations[i][5] + " "
-                    + locations[i][6] + " " + locations[i][7];
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-                var marker = new google.maps.Marker({
-                    //position: coordinates,
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map,
-                    icon: cyclingPin,
-                    title: locations[i][0],
-                    info: contentString
-                });
-                google.maps.event.addListener(marker, 'click', function () {
-                    infowindow.setContent(this.info);
-                    infowindow.open(map, this);
-                });
-                markers.push(marker);
-
-            }
-        }
-        cycMarker = markers;
-        // var markerCluster = new MarkerClusterer(map, markers,
-        //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-    } else {
-        for (var i = 0; i < cycMarker.length; i++)
-        {
-            cycMarker[i].setMap(null);
-        }
-    }
-}
-function addDancingMarker()
-{
-    locations = <?php getAllFacility() ?>;
-    var checkBox = document.getElementById("Dancing");
-    /* var text = document.getElementById("text"); */
-    if (checkBox.checked == true){
-        var markers = [];
-        var i;
-        for (i = 0; i < locations.length; i++)
-        {
-            if (locations[i][3] == "Dancing" )
-            {
-                var contentString = locations[i][0] + ", " + locations[i][5] + " "
-                    + locations[i][6] + " " + locations[i][7];
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-                var marker = new google.maps.Marker({
-                    //position: coordinates,
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map,
-                    icon: dancingPin,
-                    title: locations[i][0],
-                    info: contentString
-                });
-                google.maps.event.addListener(marker, 'click', function () {
-                    infowindow.setContent(this.info);
-                    infowindow.open(map, this);
-                });
-                markers.push(marker);
-            }
-        }
-        danMarker = markers;
-        // var markerCluster = new MarkerClusterer(map, markers,
-        //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-    } else {
-        for (var i = 0; i < danMarker.length; i++)
-        {
-            danMarker[i].setMap(null);
-        }
-    }
-}
-
-    function addSwimmingMarker()
-    {
-        locations = <?php getAllFacility() ?>;
-        var checkBox = document.getElementById("Swimming");
-        /* var text = document.getElementById("text"); */
-        if (checkBox.checked == true){
-            var markers = [];
-            var i;
-            for (i = 0; i < locations.length; i++)
-            {
-                if (locations[i][3] == 'Swimming')
-                {
-                    var contentString = locations[i][0] + ", " + locations[i][5] + " "
-                        + locations[i][6] + " " + locations[i][7];
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString
-                    });
-                    var marker = new google.maps.Marker({
-                        //position: coordinates,
-                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                        map: map,
-                        icon: swimmingPin,
-                        title: locations[i][0],
-                        info: contentString
-                    });
-                    google.maps.event.addListener(marker, 'click', function () {
-                        infowindow.setContent(this.info);
-                        infowindow.open(map, this);
-                    });
-                    markers.push(marker);
-                }
-            }
-            swimMarker = markers;
-            // var markerCluster = new MarkerClusterer(map, markers,
-            //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-        } else {
-            for (var i = 0; i < swimMarker.length; i++)
-            {
-                swimMarker[i].setMap(null);
-                // markerCluster.redraw(markerCluster.);
-            }
-        }
-    }
-</script>
-<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFBcC-k-V5abg0sD4F257eSiFwl5CJnO8&callback=loadMap"
-        async defer>
-</script>
-
 </html>

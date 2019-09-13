@@ -1,7 +1,7 @@
 <?php
 function dbConnect()
 {
-    $conn = mysqli_connect("127.0.0.1","root","Veka0810!","Get_Move");
+    $conn = mysqli_connect("127.0.0.1","root","2003","GetMove");
     if (!$conn)
     {
         die('Connection failed: ' . mysqli_connect_error());
@@ -13,7 +13,7 @@ function getAllFacility()
 {
     $conn = dbConnect();
     $allData = mysqli_query($conn, "select FacilityName, lat, lng, SportsPlayed, SuburbTown from 
-    SportsAndRecreation");
+    sportandrec");
 
     $rows = array();
     while($r = mysqli_fetch_assoc($allData))
@@ -23,7 +23,6 @@ function getAllFacility()
     echo json_encode($indexed);
     if (!$rows) {return null;}
 }
-
 
 
 
