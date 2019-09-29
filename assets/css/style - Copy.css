@@ -199,31 +199,13 @@ input[type=search] + button:focus {
 }
 
 /* Checkbox fields */
-input[type=checkbox]{
- width: 15px;
- height: 15px;
-}
+input[type=checkbox],
 input[type=radio] {
     position: absolute;
     visibility: hidden;
     height: auto;
     margin-top: 0;
 }
-
-.iframe-container{
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; 
-  height: 0;
-}
-.iframe-container iframe{
-  position: absolute;
-  top:0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
 
 .checkbox {
     margin: 0;
@@ -801,9 +783,6 @@ a.white-text:hover {
 .white-text {
   color: #fff;
 }
-.black-text {
-  color: #000000;
-}
 
 .gray-text {
   color: #333;
@@ -813,21 +792,10 @@ a.white-text:hover {
   color: #ffd500;  
 }
 
-.orange-text {
-  color: #fb5d51;  
-}
-
-
-
 /* Text styles */
 .italic-text {
   font-style: italic;
 }
-
-.bold-text {
-  font-weight: bold;
-}
-
 
 .serif-text {
   font-family: 'Times new roman', serif;
@@ -1043,7 +1011,7 @@ blockquote {
 /* HERO
 ================================================== */
 .hero {
-  background: url(../img/Standing2.jpg) center no-repeat;
+  background: url(../img/main-pic.jpg) center no-repeat;
   height: 100%;
   width: 100%;
   display: table;
@@ -1062,6 +1030,7 @@ blockquote {
 .hero-contact {
  background: url(../img/contact.jpg) center no-repeat / cover; 
 }
+
 .hero-ui-elements {
  background: url(../img/ui-elements.jpg) center no-repeat / cover; 
 }
@@ -1120,29 +1089,6 @@ blockquote {
   color: #ffd500; 
 }
 
-.hero-arrow1 {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-}
-
-.hero-arrow1 a {
-    color: #fff;
-  font-size: 44px;
-}
-
-.hero-arrow1 a:hover {
-  color: #ffd500; 
-}
-
-
-
-
 
 /* HERO2
 ================================================== */
@@ -1165,29 +1111,6 @@ blockquote {
   z-index: 0;
 }
 
-/* HERO3
-================================================== */
-
-.hero-text3 {
-  color: #000000;
-  display: table-cell;
-  vertical-align: middle;
-  position: relative;
-}
-
-.hero-text3 h1 {
-
-  max-width: 790px;
-  width: 100%;
-  padding: 0 15px;
-  font-size: 64px;
-  font-weight: 700;
-  text-align: center;
-  margin: 0 auto;
-}
-
-
-
 /* SITEMAIN
 ================================================== */
 .site-main {
@@ -1201,14 +1124,6 @@ blockquote {
 
 .site-section-small {
   padding: 120px 0;
-}
-
-.site-section-small1 {
-  padding: 60px 0;
-}
-
-.site-section-small2 {
-  padding: 10px 0;
 }
 
 .section-title {
@@ -1455,20 +1370,13 @@ display: none;
 }
 
 .testimonial-1 {
-  background: url(../img/rsz_heart.jpg) no-repeat;
+  background: url(../img/testimonial-1.jpg) no-repeat;
 }
 
 .testimonial-2 {
-  background: url(../img/rsz_vien.jpg) no-repeat;
+  background: url(../img/testimonial-2.jpg) no-repeat;
 }
 
-.testimonial-3 {
-  background: url(../img/rsz_legpain.jpg) no-repeat;
-}
-
-.testimonial-4 {
-  background: url(../img/rsz_rheumatoid.jpg) no-repeat;
-}
 .testimonial-owner {
   position: absolute;
   bottom: 10px;

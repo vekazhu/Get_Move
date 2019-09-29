@@ -24,18 +24,18 @@
 
     <!-- Favicon
     ================================================== -->
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.png">
     
     <!-- Stylesheets
     ================================================== -->
     <!-- Bootstrap core CSS -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../assets/css/style.css" rel="stylesheet">
-    <link href="../assets/css/responsive.css" rel="stylesheet">
-    <link href="../assets/css/colors.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/responsive.css" rel="stylesheet">
+    <link href="assets/css/colors.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -50,6 +50,7 @@
             height: 100%;
             border: 1px solid lightyellow;
             shape-outside: ellipse();
+            margin: 0 auto;
         }
         #data, #allData, #aeroData, #cycData, #danData, #fitData, #tenData{
             display: none;
@@ -59,39 +60,51 @@
 </head>
 <body>
 
-    <header id="masthead" class="site-header site-header-fill">
+<header id="masthead" class="site-header site-header-fill">
 
-        <nav id="primary-navigation" class="site-navigation">
+    <nav id="primary-navigation" class="site-navigation">
 
-            <div class="container-fluid">
+        <div class="container-fluid">
 
-                <div class="navbar-header">                   
-                    <a href="index.html" class="site-title yellow-text">Get<span class="white-text">-Move</span></a>
-                    
-                </div><!-- /.navbar-header -->
+            <div class="navbar-header">
+                <img src="assets/img/rsz_30_gm_nobg.png" alt=""/>
+                <a href="index.html" class="site-title yellow-text">Get<span class="white-text">-Move</span></a>
 
-                <div class="main-menu" id="perfect-navbar-collapse">
+            </div><!-- /.navbar-header -->
 
-                    <ul class="nav navbar-nav navbar-right">
+            <div class="main-menu" id="perfect-navbar-collapse">
 
-                        <li><a href="index.html">Home</a></li>
-                        <li class="dropdown active">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Places to do exercise<i class="fa fa-angle-down hidden-xs" aria-hidden="true"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="sportmap.php">Exercise places in Melbourne</a></li>
-                            </ul>                            
-                            <!-- /.dropdown-menu -->
-                        </li><!-- /.dropdown -->
+                <ul class="nav navbar-nav navbar-right">
 
-                    </ul><!-- /.navbar-nav -->
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li><a href="standing.html">Prolonged Standing</a></li>
+                    <li class="dropdown">
+                        <a href="portfolio.html" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Recommendations<i class="fa fa-angle-down hidden-xs" aria-hidden="true"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Workplace design</a></li>
+                            <li><a href="workshoes.php">Footwear</a></li>
+                            <li><a href="exerciseHome.html">Exercises</a></li>
+                            <li><a href="sportmap.php">Diet</a></li>
 
-                </div><!-- /.navbar-collapse -->
-                
-            </div>
-                      
-        </nav><!-- /.site-navigation -->
-        
-    </header><!-- /#masthead -->
+                        </ul><!-- /.dropdown-menu -->
+                    </li><!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a href="portfolio.html" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Breaks at work<i class="fa fa-angle-down hidden-xs" aria-hidden="true"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Rest breaks or meal breaks</a></li>
+                            <li><a href="#">Alert setting</a></li>
+                        </ul><!-- /.dropdown-menu -->
+                    </li><!-- /.dropdown -->
+
+                </ul><!-- /.navbar-nav -->
+
+            </div><!-- /.navbar-collapse -->
+
+        </div>
+
+    </nav><!-- /.site-navigation -->
+
+</header><!-- /#masthead -->
 
 <!--    <main id="main" class="site-main">-->
 
@@ -106,14 +119,13 @@
                 
                 </div>
 
-                <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">Places to exercise more</li>
-
-
-                </ol><!-- /.breadcrumb -->
+               <!-- /.breadcrumb -->
 
     <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">Places to exercise more</li>
+        </ol>
             <H1>Chooe The Exercise You Love</H1>
          <div class="marker-filter">
 <!--        <span class="filter-box">-->
@@ -152,13 +164,13 @@
 
         </section>
 
-    <footer id="colophon" class="site-footer">
+<footer id="colophon" class="site-footer">
 
-        <div class="copyright">
-            <p>&copy; 2019 Get-Move | Made by <a href="#" class="yellow-text">Get-Move Project</a></p>
-        </div>
-        
-    </footer>
+    <div class="copyright">
+        <p>&copy; 2019 Get-Move | Made by Tech Chaser</p>
+    </div><!-- /.copyright -->
+
+</footer>
 
 
     <!-- Bootstrap core JavaScript
@@ -166,12 +178,12 @@
     <!-- Placed at the end of the document so the pages load faster -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script src="../assets/js/jquery.slicknav.min.js"></script>
-    <script src="../assets/js/slick.min.js"></script>
-    <script src="../assets/js/touchswipe.min.js"></script>
-    <script src="../assets/js/skrollr.min.js"></script>
-    <script src="../assets/js/jquery.countTo.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.slicknav.min.js"></script>
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/touchswipe.min.js"></script>
+    <script src="assets/js/skrollr.min.js"></script>
+    <script src="assets/js/jquery.countTo.min.js"></script>
 <!--    <script src="../assets/js/script.js"></script>-->
 
 </body>
@@ -185,33 +197,32 @@ var aeroMarker = [];
 var cycMarker = [];
 var danMarker = [];
 var swimMarker = [];
-var aerobicsPin = "../img/aerobics.png";
-var cyclingPin = "../img/cycling.png";
-var dancingPin = "../img/dancing.png";
-var swimmingPin = "../img/swim.png";
-var currentPin = "../img/mapPin.png";
+var aerobicsPin = "img/aerobics.png";
+var cyclingPin = "img/cycling.png";
+var dancingPin = "img/dancing.png";
+var swimmingPin = "img/swim.png";
+var currentPin = "img/mapPin.png";
 
 function loadMap() {
-    var melbourne = {lat: -37.814, lng: 144.963};
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: melbourne,
-        zoom: 12,
-        mapTypeControl: true,
-        mapTypeControlOptions:
-            {
-                mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
-                    'styled_map'],
-                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-            }
-    });
 
-    infoWindow = new google.maps.InfoWindow;
+    // get current location and load the Google map
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             var pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: pos,
+                zoom: 12,
+                mapTypeControl: true,
+                mapTypeControlOptions:
+                    {
+                        mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+                            'styled_map'],
+                        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+                    }
+            });
             var infowindow = new google.maps.InfoWindow({
                 content: "Current Location"
             });
@@ -221,12 +232,11 @@ function loadMap() {
                 map: map,
                 icon: currentPin
             });
-            marker.addListener('click', function() {
-                infowindow.open(map, marker);
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
             });
-
-
-        }, function() {
+            infowindow.open(map,marker);
+        }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
     } else {
@@ -244,10 +254,12 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 }
 
+    //Functions to add markers for aerobic exercises
     function addAerobicMarker() {
         locations = <?php getAllFacility() ?>;
         var checkBox = document.getElementById("Aerobics");
         /* var text = document.getElementById("text"); */
+        //if users
         if (checkBox.checked == true) {
             var markers = [];
             var i;
@@ -323,12 +335,19 @@ function addCyclingMarker()
             }
         }
         cycMarker = markers;
-        // var markerCluster = new MarkerClusterer(map, markers,
-        //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        var markerCluster = new MarkerClusterer(map, cycMarker,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
     } else {
         for (var i = 0; i < cycMarker.length; i++)
         {
             cycMarker[i].setMap(null);
+            markerCluster.prototype.clearMarkers = function() {
+                this.resetViewport(true);
+
+                // Set the markers a empty array.
+                this.markers_ = [];
+            };
         }
     }
 }
