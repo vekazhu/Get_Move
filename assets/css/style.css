@@ -45,12 +45,12 @@
 
 
 a { 
-    color: #ffd500;
+    color: #ffd500; /*yellow*/
 }
 
 a:focus,
 a:hover {
-    color: #3B3A36;
+    color: #3B3A36; /*gray*/
     outline: 0 none;
     text-decoration: none;
 }
@@ -501,6 +501,10 @@ input[type=radio] {
 .nav-tabs.tab-style > li.active > a {
     background-color: #ffd500;
     border: 1px solid #ffd500;
+}
+
+.nav-tabs.tab-style > li.bd > a {
+    border-bottom: 1px solid #ffd500;
 }
 
 .nav-tabs.tab-style > li > a {
@@ -970,7 +974,7 @@ blockquote {
   margin:  0 7px;
   font-weight: 700;
   text-transform: uppercase;
-  color: #fff;
+  color: #fff; /*white*/
 }
 
 .navbar-nav > li > a:hover,
@@ -984,7 +988,7 @@ blockquote {
 .slicknav_nav li.active > a,
 .slicknav_nav .dropdown.active > a a,
 .slicknav_nav .active .active a {
-  color: #ffd500;  
+  color: red; /*#ffd500 */ 
 }
 
 .slicknav_nav > li > a .slicknav_arrow {
@@ -994,9 +998,8 @@ blockquote {
 .dropdown-menu li.active a,
 .dropdown-menu li.active a:hover {
   background-color: transparent;
-  color: #ffd500;    
+  color: #ffd500; /* #ffd500*/    
 }
-
 .navbar-nav > li > a:hover,
 .navbar-nav > li > a:focus,
 .nav .open > a, 
@@ -1016,7 +1019,7 @@ blockquote {
   visibility: hidden;
   border-radius: 0;
   border: 0;
-  border-top: 5px solid #ffd500; 
+  border-top: 5px solid #ffd500; /*#ffd500*/
   transition: all 0.2s;
   -moz-transition: all 0.2s;
   -webkit-transition: all 0.2s;
@@ -1043,9 +1046,9 @@ blockquote {
 /* HERO
 ================================================== */
 .hero {
-  background: url(../img/Standing2.jpg) center no-repeat;
-  height: 100%;
-  width: 100%;
+  background: url(../img/standup5.png) center no-repeat;
+  height: 100%;/*690*/
+  width: 100%; /*1280*/
   display: table;
   position: relative;
   background-size: cover;
@@ -1117,7 +1120,7 @@ blockquote {
 }
 
 .hero-arrow a:hover {
-  color: #ffd500; 
+  color: #ffd500; /*#ffd500*/
 }
 
 .hero-arrow1 {
@@ -1444,15 +1447,16 @@ display: none;
 }
 
 .testimonial {
-  padding: 25px;
+  padding: 0px;
   background-color: #fff;
 }
 
 .testimonial-content {
   min-height: 134px;
-  padding: 10px 0 25px 170px;
+  padding: 0px 0 0px 170px;
   position: relative;
 }
+/*padding: 10px 0 25px 170px;*/
 
 .testimonial-1 {
   background: url(../img/rsz_heart.jpg) no-repeat;
@@ -2158,3 +2162,4 @@ a.post-title:hover,
   display: block;
   margin: 8px;
 }
+

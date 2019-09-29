@@ -255,7 +255,7 @@ a.white-text:hover {
 }
 
 .breadcrumb .active {
-  color: #ffd500;
+  color: #fb5d51; /* Ae mod #ffd500*/
 }
 
 /* Pagination */
@@ -299,13 +299,20 @@ a.white-text:hover {
 .dropdown.open > a, 
 .dropdown-menu a:hover, 
 .dropdown:hover > a, 
-.dropdown-menu>li>a:focus,
-.dropdown-menu li a:hover,
+.dropdown > a.active, 
+/*.dropdown-menu>li>a:focus,
+.dropdown-menu li a:hover,*/
 .slicknav_nav li.active > a,
 .slicknav_nav .dropdown.active > a a,
 .slicknav_nav .active .active a {
   color: #ffd500;  
 }
+/* Navigation: dropdownmenu by Ae */
+.dropdown-menu>li>a:focus,
+.dropdown-menu li a:hover {
+  color: #fb5d51;  /*Ae change active submmenu color #ffd500*/
+}
+
 
 .slicknav_nav > li > a .slicknav_arrow {
   color: #fff;
