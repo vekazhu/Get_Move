@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+         <script type="text/javascript">
+    function sendmail(){
+      var display = document.getElementById("display");
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", "email.php");
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+           display.innerHTML = this.responseText;
+        } else {
+           display.innerHTML = "Loading...";
+        };
+      }
+    }
+  </script>
+    </head>
+    <body>
+        <div id="display">TODO write content</div>
+        <button id="start" onclick="sendmail()">sendmail</button>
+    </body>
+</html>
