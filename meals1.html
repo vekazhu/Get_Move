@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            #id_food_table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            #id_food_table td, #id_food_table th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+            #id_food_table tr:nth-child(even){background-color: #f2f2f2;}
+            #id_food_table tr:hover {background-color: #ddd;}
+            #id_food_table th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #ffd500;
+                color: white;
+            }
+        </style>
+    </head>
+<body style="background-image: url('./images.jpg'); background-size: cover">
+    <div class="container">
+        <div class="row">
+            <div class="form-inline" style="margin: 50px">
+                <input class="form-control mr-sm-2" type="text" id="foodname" placeholder="Search">
+                <button class="btn btn-success" type="submit" onclick="output()">Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <table class="table table-bordered" id="id_food_table" style="max-height: 800px; width:100%; overflow-y: scroll; background-color:white"> </table>
+    </div>
+    <script>
+        var data_table = "";
+        function output(){
+            var x;
+            x = document.getElementById('foodname').value;
+            var column = document.getElementById('foods');
+            
+            //get access to API
+            $.getJSON("https://api.nal.usda.gov/ndb/search/?format=json&q="+x+"&max=15&offset=0&api_key=YqdebmGRYk6LXKc2QGQfG9gkizulZduL9xt7RlKU", function(data){               
+                //get food name and number
+                var items = data.list.item;
+                console.log(data);
+                var i = 0;
+                data_table = "<thead> <tr> <th>Description</th> <th>Type</th><th>Vitamin</th><th>FIBER</th><th>SUGER</th><th>FAT</th><th>CARB</th> </tr></thead><tbody>";
+                items.forEach(function(f){
+                    var foodlist = [];
+                    var oneFood = {};
+                    oneFood["manu"] = f.manu;
+                    oneFood["foodname"] = f.name;
+                    oneFood["foodId"] = f.ndbno;                    
+                    $.getJSON("https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=YqdebmGRYk6LXKc2QGQfG9gkizulZduL9xt7RlKU&nutrients=205&nutrients=204&nutrients=208&nutrients=203&nutrients=291&ndbno="+ f.ndbno, function(unit){
+                        var energy = unit.report.foods[0].nutrients[0].value,
+                        fiber = unit.report.foods[0].nutrients[1].value,
+                        sugar = unit.report.foods[0].nutrients[2].value,
+                        fat = unit.report.foods[0].nutrients[3].value,
+                        carb = unit.report.foods[0].nutrients[4].value;
+                        oneFood["energy"] =energy;
+                        oneFood["fiber"] = fiber;
+                        oneFood["sugar"] =sugar;
+                        oneFood["fat"] = fat;
+                        oneFood["carb"] = carb;
+                        foodlist.push(oneFood);     
+                        addtable(foodlist);  
+                    });                                 
+                });
+            })
+        }
+
+        function addtable(foodlist){  
+            for(var i=0; i< foodlist.length; i++){
+                data_table = data_table+ "<tr><td style='color:blue; pointer: curser;' id='"+foodlist[i].foodid+"'onclick=''>"+foodlist[i].foodname+"</td><td>"+foodlist[i].manu;
+                data_table = data_table+ "<td>"+foodlist[i].energy+"</td><td>"+foodlist[i].fiber+"</td><td>"+foodlist[i].sugar+"</td><td>"+foodlist[i].fat+"</td><td>"+foodlist[i].carb+"</td></tr>";
+                console.log(foodlist[i]);
+                document.getElementById("id_food_table").innerHTML = data_table;
+            }        
+            document.getElementById("id_food_table").style.height="600px";
+        }
+        //Code to add the food from the food list
+        function addFood(id) {
+    
+            var quantity = document.getElementById("quantity-"+ id).value;
+            var table = document.getElementById("foods2");
+            var rows = table.rows.length;
+            //console.log(rows);
+    
+            $.getJSON("https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=YqdebmGRYk6LXKc2QGQfG9gkizulZduL9xt7RlKU&nutrients=205&nutrients=204&nutrients=208&nutrients=203&nutrients=291&ndbno="+ id, function(unit){
+    
+                //console.log(unit.report.foods[0]);
+                var name = unit.report.foods[0].name;
+    
+                var regexFoodName = /(.+?)(, UPC.+)/i;
+                var upc = name.match(regexFoodName);
+                if(upc !== null){
+                    name = upc[1];
+                }
+                var serving = unit.report.foods[0].measure;
+                var energy = unit.report.foods[0].nutrients[0].value,
+                    fiber = unit.report.foods[0].nutrients[1].value,
+                    sugar = unit.report.foods[0].nutrients[2].value,
+                    fat = unit.report.foods[0].nutrients[3].value,
+                    carb = unit.report.foods[0].nutrients[4].value;
+    
+                var regex = /(\S+) (oz|OZA)/i;
+                var found = serving.match(regex);
+                if (found !== null){
+                    serving = "100.0 g";
+    
+                    energy = unit.report.foods[0].nutrients[0].gm;
+                    fiber = unit.report.foods[0].nutrients[1].gm;
+                    sugar = unit.report.foods[0].nutrients[2].gm;
+                    fat = unit.report.foods[0].nutrients[3].gm;
+                    carb = unit.report.foods[0].nutrients[4].gm;
+    
+                    energy = energy.toString();
+                    fiber = fiber.toString();
+                    sugar = sugar.toString();
+                    fat = fat.toString();
+                    carb = carb.toString();
+    
+                }
+    
+                energy = energy.replace("--", "0.0");
+                fiber = fiber.replace("--", "0.0");
+                sugar = sugar.replace("--", "0.0");
+                fat = fat.replace("--", "0.0");
+                carb = carb.replace("--", "0.0");
+    
+    
+    
+                energy = (parseFloat(energy) * quantity).toFixed(2).toString();
+                fiber = (parseFloat(fiber) * quantity).toFixed(2).toString();
+                sugar = (parseFloat(sugar) * quantity).toFixed(2).toString();
+                fat = (parseFloat(fat) * quantity).toFixed(2).toString();
+                carb = (parseFloat(carb) * quantity).toFixed(2).toString();
+    
+    
+    
+                var row = table.insertRow(-1);
+                var cell1 = row.insertCell(0),
+                    cell2 = row.insertCell(1),
+                    cell3 = row.insertCell(2),
+                    cell4 = row.insertCell(3),
+                    cell5 = row.insertCell(4),
+                    cell6 = row.insertCell(5),
+                    cell7 = row.insertCell(6),
+                    cell8 = row.insertCell(7),
+                    cell9 = row.insertCell(8);
+    
+                cell1.innerHTML = name;
+                cell2.innerHTML = quantity;
+                cell3.innerHTML = serving;
+                cell4.innerHTML = energy;
+                cell5.innerHTML = fiber;
+                cell6.innerHTML = sugar;
+                cell7.innerHTML = fat;
+                cell8.innerHTML = carb;
+                cell9.innerHTML = `<button name="removebutton" type="button" onclick="remove(${rows})">Remove</button>`;
+    
+                var energySum = 0,
+                    fiberSum = 0,
+                    sugarSum = 0,
+                    fatSum = 0,
+                    carbSum = 0;
+                //console.log("hello");
+    
+                //create rows based on the item selected by user
+                for (var i = 0, row; row = table.rows[i]; i++){
+                    //console.log(i);
+                    energySum += parseFloat(table.rows[i].cells[3].innerHTML);
+                    //console.log(energySum);
+                    fiberSum += parseFloat(table.rows[i].cells[4].innerHTML);
+                    sugarSum += parseFloat(table.rows[i].cells[5].innerHTML);
+                    fatSum += parseFloat(table.rows[i].cells[6].innerHTML);
+                    carbSum += parseFloat(table.rows[i].cells[7].innerHTML);
+                }
+    
+                energySum = energySum.toFixed(2);
+                fiberSum = fiberSum.toFixed(2);
+                sugarSum = sugarSum.toFixed(2);
+                fatSum = fatSum.toFixed(2);
+                carbSum = carbSum.toFixed(2);
+    
+                // var total = document.getElementById("subtotal");
+                // var addtotal = `<tr><td>${energySum}</td><td>${fiberSum}</td><td>${sugarSum}</td><td>${fatSum}</td><td>${carbSum}</td></tr>`
+                // total.innerHTML = addtotal;
+                var eng = document.getElementById("eng"),
+                    fib = document.getElementById("fib"),
+                    sug = document.getElementById("sug"),
+                    fat = document.getElementById("fat"),
+                    carb = document.getElementById("carb");
+    
+                eng.innerHTML = energySum;
+                fib.innerHTML = fiberSum;
+                sug.innerHTML = sugarSum;
+                fat.innerHTML = fatSum;
+                carb.innerHTML = carbSum;
+    
+                console.log(eng);
+      
+            });   
+        }
+        // remove the food from user table
+function remove(index) {
+
+    var table = document.getElementById("foods2");
+    table.deleteRow(index);
+    //console.log(table);
+
+
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        //console.log(row.rowIndex);
+        //console.log(i);
+        //var fun = "remove(" + i + ")";
+        //row.cells[8].firstChild.onclick = remove(i);
+        // var clickfun = row.cells[8].firstChild.getAttribute("onclick");
+        // var funname = clickfun.substring(0,clickfun.indexOf("("));
+        // document.getElementById("button1").setAttribute("onclick",funname+"("+i+")");
+        var child = row.cells[8].firstChild;
+        var td = row.cells[8];
+        td.removeChild(child);
+
+        row.cells[8].innerHTML = `<button name="removebutton" type="button" onclick="remove(${i})">Remove</button>`;
+
+    }
+
+    var energySum = 0,
+        fiberSum = 0,
+        sugarSum = 0,
+        fatSum = 0,
+        carbSum = 0;
+
+    for (var i = 0, row; row = table.rows[i]; i++){
+        //console.log(i);
+        energySum += parseFloat(table.rows[i].cells[3].innerHTML);
+        //console.log(energySum);
+        fiberSum += parseFloat(table.rows[i].cells[4].innerHTML);
+        sugarSum += parseFloat(table.rows[i].cells[5].innerHTML);
+        fatSum += parseFloat(table.rows[i].cells[6].innerHTML);
+        carbSum += parseFloat(table.rows[i].cells[7].innerHTML);
+    }
+
+    energySum = energySum.toFixed(2);
+    fiberSum = fiberSum.toFixed(2);
+    sugarSum = sugarSum.toFixed(2);
+    fatSum = fatSum.toFixed(2);
+    carbSum = carbSum.toFixed(2);
+
+    // var total = document.getElementById("subtotal");
+    // var addtotal = `<tr><td>${energySum}</td><td>${fiberSum}</td><td>${sugarSum}</td><td>${fatSum}</td><td>${carbSum}</td></tr>`
+    // total.innerHTML = addtotal;
+
+    var eng = document.getElementById("eng"),
+        fib = document.getElementById("fib"),
+        sug = document.getElementById("sug"),
+        fat = document.getElementById("fat"),
+        carb = document.getElementById("carb");
+
+    eng.innerHTML = energySum;
+    fib.innerHTML = fiberSum;
+    sug.innerHTML = sugarSum;
+    fat.innerHTML = fatSum;
+    carb.innerHTML = carbSum;
+
+    pie();
+
+}
+        //code to hide and show the the added item
+function addCustomerFoodButton() {
+    let display = document.getElementsByClassName("customize-food");
+    // var style = window.getComputedStyle(display,null);
+    //  var   dis = style.getPropertyValue('display');
+    console.log(display);
+    for (var i = 0; i != display.length; i++) {
+        if (display[i].style.display == "none")
+            display[i].style.display = "block";
+        else
+            display[i].style.display = "none";
+    }
+}
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>
+
+
+

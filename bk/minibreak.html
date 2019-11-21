@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+        <!--<button onclick="myFunction()"> try it </button>
+        <script>
+            function myFunction(){
+                setTimeout(function(){alert("Exercise1");},3000);
+                setTimeout(function(){alert("Exercise2");},3000);
+                setTimeout(function(){alert("Exercise3");},3000);
+            }
+        </script> -->
+        
+        <progress value="0" max="30" id="pbar" ></progress>
+        <p id="posture">Moving at your desk!</p>
+        <p id="counting">30</p>
+         <button id="start" onclick="start_countdown()">Start CountDown</button>
+  
+        <script type="text/javascript">
+           var audio = new Audio('assets/sound/Loud_Alarm_Clock_Buzzer.mp3'); 
+           
+           function start_countdown1(){
+           alert("The function called 'start_countdown1' has been called.");
+           var reverse_counter = 30;
+           var downloadTimer = setInterval(function(){
+           document.getElementById("pbar").value = 30 - --reverse_counter;
+           if(reverse_counter <= 0)
+                clearInterval(downloadTimer);
+            document.getElementById("counting").innerHTML= reverse_counter;
+             //alert("alertplay!");
+             //audio.play();
+           },3000);
+        }
+        function start_countdown1(){
+           alert("The function called 'start_countdown1' has been called.");
+           var reverse_counter = 30;
+           var downloadTimer = setInterval(function(){
+           document.getElementById("pbar").value = 30 - --reverse_counter;
+           if(reverse_counter <= 0){
+                clearInterval(downloadTimer);
+                alert("stop!");
+            }
+            document.getElementById("counting").innerHTML= reverse_counter;
+            
+             //audio.play();
+           },3000);
+        }
+        
+         function start_countdown(){
+            let msg = "Hi";
+            let timeSet = [3000,5000,7000];
+            let count = 0;
+            alert("before call")
+            var i;
+            for (i = 0; i < 3; i++) {
+                alert("before call" + i);
+                callAlert("Hi1",3000,"Move your leg" + i);
+            }
+         }
+        function callAlert(msg,time,posture){
+            //Display an alert box after 30 seconds (3000 milliseconds):
+            var reverse_counter = time/100;
+           // setTimeout(function(){ alert(msg); },time);
+           
+            var downloadTimer = setInterval(function(){
+            document.getElementById("pbar").value = 30 - --reverse_counter;
+            if(reverse_counter <= 0){
+                clearInterval(downloadTimer);
+                alert("stop!");
+            }
+            document.getElementById("counting").innerHTML= reverse_counter;
+            document.getElementById("posture").innerHTML= posture;
+             //audio.play();
+           },time);
+        }
+       
+
+        </script>
+    </body>
+</html>

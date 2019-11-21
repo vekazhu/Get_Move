@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <progress value="0" max="30" id="pbar" ></progress>
+        <p id="posture">Moving at your desk!</p>
+        <p id="counting">30</p>
+         <button id="start" onclick="start_countdown()">Start CountDown</button>
+    </body>
+     <script type="text/javascript">
+         let msg = "Hi";
+         let myLoop;
+         let timeSet = [3000,3000,3000]
+         let count = 0;
+         var reverse_counter = timeSet[count]/100;
+         callAlert(msg,timeSet[count])
+         function callAlert(msg,time){
+            document.getElementById("pbar").value = time/100 - --reverse_counter;
+            if(reverse_counter <= 0){
+                clearInterval(downloadTimer);
+                alert("stop!");
+            }
+            document.getElementById("counting").innerHTML= reverse_counter;
+            document.getElementById("posture").innerHTML= posture;
+            count++;
+            if (count === timeSet.lenght)
+                 clearInterval(myLoop);
+             
+            else
+                 myLoop = setInterval(callAlert,timeSet[count]); 
+          
+         }
+         
+     </script>
+</html>
